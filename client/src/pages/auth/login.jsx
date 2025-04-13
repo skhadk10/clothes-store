@@ -67,7 +67,7 @@ const AuthLogin = () => {
         <div className="flex flex-col items-center gap-2 mt-4">
           <p className="text-gray-500">Don't have an account?</p>
           <Button
-            onClick={() => navigate("/register")}
+            onClick={() => navigate("/auth/register")}
             variant="link"
             className="text-blue-600 hover:underline"
           >

@@ -97,7 +97,7 @@ const AuthRegister = () => {
         <div className="flex flex-col items-center gap-2 mt-4">
           <p className="text-gray-500">Already have an account?</p>
           <Button
-            onClick={() => navigate("/login")}
+            onClick={() => navigate("/auth/login")}
             variant="link"
             className="text-blue-600 hover:underline"
           >

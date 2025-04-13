@@ -1,28 +1,21 @@
 import React, { useState } from "react";
-import { Outlet } from "react-router-dom";
-import AdminSidebar from "../common/sidebar";
 import Header from "../common/header";
-import CommonChildrenRenderingPage from "../common/commonrenderpage";
+import AdminSidebar from "../common/sidebar";
 import CommonSidebar from "../common/common-sidebar";
+import CommonChildrenRenderingPage from "../common/commonrenderpage";
 
-const AuthLayout = () => {
+const AdminLayout = () => {
   const [open, setOpen] = useState(false);
-
   return (
     <div className="flex flex-col min-h-screen">
       <Header setOpen={setOpen} />
-      {/* Sidebar (mobile) */}
-      <AdminSidebar open={open} setOpen={setOpen} />
-
+      <AdminSidebar setOpen={setOpen} open={open} />
       <div className="flex flex-1">
-        {/* Sidebar */}
         <CommonSidebar />
-
-        {/* Main content area */}
         <CommonChildrenRenderingPage />
       </div>
     </div>
   );
 };
 
-export default AuthLayout;
+export default AdminLayout;
