@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import User from "../../models/User.js";
 import bcrypt from "bcryptjs";
 export const registerUser = async (req, res) => {
-  const { firstName,lastName, email, password } = req.body;
+  const { firstName, lastName, email, password } = req.body;
   try {
     const checkUser = await User.findOne({ email });
 
@@ -14,7 +14,12 @@ export const registerUser = async (req, res) => {
     }
     const hashPassword = await bcrypt.hash(password, 12);
 
-    const newUser = new User({ firstName,lastName, email, password: hashPassword });
+    const newUser = new User({
+      firstName,
+      lastName,
+      email,
+      password: hashPassword,
+    });
 
     await newUser.save();
     res.status(200).json({
@@ -41,7 +46,9 @@ export const loginUser = async (req, res) => {
     // Check if user already exists
     const existingUser = await User.findOne({ email });
     if (!existingUser) {
-      return res.status(402).json({ message: "User Doesnot Exist" });
+      return res
+        .status(400)
+        .json({ success: false, message: "User Doesnot Exist" });
     }
     const comparePassword = await bcrypt.compare(
       password,
@@ -49,7 +56,7 @@ export const loginUser = async (req, res) => {
     );
 
     if (!comparePassword) {
-      return res.status(402).json({ message: "Invalid Password" });
+      return res.status(401).json({ message: "Invalid Password" });
     }
 
     //generate token
@@ -61,26 +68,53 @@ export const loginUser = async (req, res) => {
         firstName: existingUser.firstName,
         lastName: existingUser.lastName,
       },
-      process.env.JWT_SECRET,
-      { expiresIn: "1h" }
+      "CLIENT_SECRET_KEY",
+      { expiresIn: "60m" }
     );
-    res.cookie('token',token, {
-      httpOnly: true,
-      secure: false
-      
-    }).json({
-      success: true,
-      message: "Login successful",
-      user: {
-        id: existingUser._id,
-        email: existingUser.email,
-        role: existingUser.role,
-        firstName: existingUser.firstName,
-        lastName: existingUser.lastName,
-      },
-    })
+    res
+      .cookie("token", token, {
+        httpOnly: true,
+        secure: false,
+      })
+      .json({
+        success: true,
+        message: "Login successful",
+        user: {
+          id: existingUser._id,
+          email: existingUser.email,
+          role: existingUser.role,
+          firstName: existingUser.firstName,
+          lastName: existingUser.lastName,
+        },
+      });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
 
-    res.status(200).json({ message: "User registered successfully" });
+export const authMiddleware = (req, res, next) => {
+  const token = req.cookies.token;
+  if (!token)
+    return res
+      .status(401)
+      .json({ success: false, message: "unauthorized user!" });
+  try {
+    const decoded = jwt.verify(token, "CLIENT_SECRET_KEY");
+    req.user = decoded;
+    next();
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "unauthorized user!",
+    });
+  }
+};
+export const logoutUser = async (req, res) => {
+  try {
+    res
+      .clearCookie("token")
+      .json({ success: true, message: "Logout successful" });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal server error" });

@@ -18,14 +18,11 @@ const AuthLogin = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(loginUser(login)).then((data) => {
-          if (data?.payload?.success) {
-            console.log(data?.payload?.message, "success");
-            toast(data?.payload?.message);
-          }
-    
-          navigate("/");
-        });
- 
+      if (data?.payload?.success) {
+        console.log(data?.payload?.message, "success");
+        toast(data?.payload?.message);
+      }
+    });
   };
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">

@@ -27,7 +27,7 @@ const AuthRegister = () => {
         toast(data?.payload?.message);
       }
 
-      navigate("/login");
+      navigate("/auth/login");
     });
   };
 
