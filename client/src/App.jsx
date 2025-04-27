@@ -19,21 +19,19 @@ import { checkAuth } from "./store/auth";
 import { useDispatch, useSelector } from "react-redux";
 
 function App() {
-  const { isloading, isAuthenticated, user } = useSelector(
+  const { isLoading, isAuthenticated, user } = useSelector(
     (state) => state.auth
   );
-  //testing purpose
-  // const isAuthenticated = true;
-  // const user = {
-  //   role: "user",
-  // };
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(checkAuth());
   }, [dispatch]);
 
-  isloading ? <div className="text-4xl">loading....</div> : null;
+  // Show loading state until auth check completes
+  if (isLoading) {
+    return <div className="text-4xl">Loading...</div>;
+  }
   return (
     <div className="flex flex-col overflow-hidden bg-white">
       <Routes>
