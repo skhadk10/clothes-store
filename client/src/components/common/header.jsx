@@ -1,7 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Menu } from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutUser } from "@/store/auth";
 
 const Header = ({ setOpen }) => {
+  const { user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
+  const LogOut = () => {
+    dispatch(logoutUser());
+  };
+
+
   return (
     <header className="h-16 bg-gray-900 text-white sticky top-0 z-50 shadow-md">
       <div className="flex justify-between items-center h-full px-4">
@@ -23,6 +33,24 @@ const Header = ({ setOpen }) => {
                 Contact
               </a>
             </li>
+            {user && (
+              <>
+                <li>
+                  <a
+                    onClick={() => LogOut()}
+                    href="#"
+                    className="hover:text-red-200"
+                  >
+                    LogOut
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-red-200">
+                    {user.firstName}
+                  </a>
+                </li>
+              </>
+            )}
           </ul>
         </nav>
 
