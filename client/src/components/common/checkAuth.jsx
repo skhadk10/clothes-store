@@ -59,6 +59,35 @@ const CheckAuth = ({ isAuthenticated, user, children }) => {
     return <Navigate to="/admin/dashboard" />;
   }
 
+  // Handle wrong or non-existent URLs
+  // if (
+  //   ![
+  //     "/auth/login",
+  //     "/auth/register",
+  //     "/shop/home",
+  //     "/admin/dashboard",
+  //     "/unauth-page",
+  //   ].some((path) => location.pathname.startsWith(path))
+  // ) {
+  //   return (
+  //     <Navigate to="/wrong-page" />
+      // <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
+      //   <h1 className="text-4xl font-bold text-red-500">
+      //     404 - Page Not Found
+      //   </h1>
+      //   <p className="text-lg mt-4">
+      //     The page you are looking for does not exist.
+      //   </p>
+      //   <Link
+      //     to="/shop/home"
+      //     className="mt-6 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+      //   >
+      //     Go Back to Home
+      //   </Link>
+      // </div>
+  //   );
+  // }
+
   return <>{children}</>;
 };
 

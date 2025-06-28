@@ -16,7 +16,7 @@ const AuthLayout = () => {
 
       <div className="flex flex-1">
         {/* Sidebar */}
-        <CommonSidebar />
+
 
         {/* Main content area */}
         <CommonChildrenRenderingPage />

@@ -17,6 +17,7 @@ import ShoppingCheckout from "./pages/shop/checkout";
 
 import { checkAuth } from "./store/auth";
 import { useDispatch, useSelector } from "react-redux";
+import UnauthPage from "./pages/unauth-page";
 
 function App() {
   const { isLoading, isAuthenticated, user } = useSelector(
@@ -80,6 +81,7 @@ function App() {
           <Route path="products" element={<AuthProduct />} />
           <Route path="orders" element={<AuthOrder />} />
         </Route>
+        <Route path="/unauth-page" element={<UnauthPage />} />
       </Routes>
       <Toaster />
     </div>

@@ -1,46 +1,19 @@
 import React from "react";
 
-const CommonSidebar = () => {
+const CommonSidebar = ({ items }) => {
   return (
-    <div className="hidden md:flex w-64 bg-gray-800 text-white h-[calc(100vh-4rem)] sticky top-16 z-40 shadow-xl">
-      <div className="p-4 w-full">
-        <h2 className="text-xl font-bold mb-6 mt-2">Sidebar</h2>
-        <ul className="space-y-2">
-          <li>
-            <a
-              href="#"
-              className="flex items-center p-3 hover:bg-gray-700 rounded-lg transition-all"
-            >
-              <span className="ml-2">Menu 1</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              className="flex items-center p-3 hover:bg-gray-700 rounded-lg transition-all"
-            >
-              <span className="ml-2">Menu 2</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              className="flex items-center p-3 hover:bg-gray-700 rounded-lg transition-all"
-            >
-              <span className="ml-2">Menu 3</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              className="flex items-center p-3 hover:bg-gray-700 rounded-lg transition-all"
-            >
-              <span className="ml-2">Menu 4</span>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
+    <ul className="space-y-2">
+      <li>
+        <a
+          href={items.path} // Changed from items.link to items.path
+          className="flex items-center p-3 hover:bg-gray-700 rounded-lg transition-all"
+        >
+          <h1 className="ml-2 mt-2.5 text-xl  font-bold text-white">
+            {items.title}
+          </h1>
+        </a>
+      </li>
+    </ul>
   );
 };
 

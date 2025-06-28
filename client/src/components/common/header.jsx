@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Menu } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "@/store/auth";
@@ -10,30 +10,41 @@ const Header = ({ setOpen }) => {
   const LogOut = () => {
     dispatch(logoutUser());
   };
-
+  const isLoggedIn = !!user;
+  const isUser = user?.role === "user";
 
   return (
     <header className="h-16 bg-gray-900 text-white sticky top-0 z-50 shadow-md">
       <div className="flex justify-between items-center h-full px-4">
         <h1 className="text-xl font-bold">Your Header</h1>
+
         <nav>
           <ul className="hidden md:flex space-x-6">
-            <li>
-              <a href="#" className="hover:text-red-200">
-                Home
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:text-red-200">
-                About
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:text-red-200">
-                Contact
-              </a>
-            </li>
-            {user && (
+            {(!isLoggedIn || isUser) && (
+              <>
+                <li>
+                  <a href="#" className="hover:text-red-200">
+                    Men
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-red-200">
+                    Women
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-red-200">
+                    Kid
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-red-200">
+                    accessories
+                  </a>
+                </li>
+              </>
+            )}
+            {isLoggedIn && (
               <>
                 <li>
                   <a
